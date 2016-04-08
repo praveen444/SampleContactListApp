@@ -2,8 +2,14 @@
 
 var express = require('express');
 var app = express();
-var mongojs = require('mongojs');
-var db = mongojs('contactlist', ['contactlist']);
+
+
+var databaseUrl = process.env.MONGOLAB_URI || "mydb"; // "username:password@example.com/mydb"
+var collections = ["contactlist"]
+var db = require("mongojs").connect(databaseUrl, collections);
+
+//var mongojs = require('mongojs');
+//var db = mongojs('contactlist', ['contactlist']);
 var bodyParser = require('body-parser');
 
 app.use(express.static(__dirname + '/public'));
@@ -53,5 +59,5 @@ app.put('/contactlist/:id', function (req, res) {
   );
 });
 
-app.listen(3000);
+app.listen(3001);
 console.log("Server running on port 3000");
